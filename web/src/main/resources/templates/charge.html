@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/main :: header">
+</head>
+<body class="invisible" th:style="'background:url(' + @{/pic/1.jpg} + ');'">
+<script th:src="@{/js/charge.js}" defer></script>
+<div th:replace="fragments/main :: navbar"></div>
+
+<h1 th:text="${contractName != null} ? |${title} (${contractName})| : ${title}"></h1>
+
+<button id="fundCharge" class="ui-button ui-widget ui-corner-all" onclick="findCharge()">Поиск
+    <span class='ui-icon ui-icon-circle-plus' aria-hidden='true'></span></button>
+<br/><br/>
+
+<div id="mainTable"></div>
+<div id="main_edit_create_dialog" title="Поиск/Редактирование" class="ui-front">
+    <div id="dialog"></div>
+</div>
+
+
+<div th:replace="fragments/main :: dialog-confirm"></div>
+<div th:replace="fragments/main :: dialog-dictionary"></div>
+<div th:replace="fragments/main :: dialog-function"></div>
+<div th:replace="fragments/main :: dialog-error"></div>
+<div th:replace="fragments/main :: dialog-loading"></div>
+<div th:replace="fragments/main :: dialog-info"></div>
+
+
+</body>
+</html>

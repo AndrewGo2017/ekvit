@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<!--Contractor-->
+<div th:fragment="contractorDialog" class="modal-body">
+    <form name="detailsForm" class="form-horizontal" >
+        <input th:value="${contractor != null} ? ${contractor.id} : '' " class="dialog-data" type="hidden" name="id">
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Наименование</label>
+
+            <div class="col-xs-9">
+                <input th:value="${contractor != null} ? ${contractor.name} : '' " class="dialog-data form-control"
+                       name="name" id="name"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Полное наименование</label>
+
+            <div class="col-xs-9">
+                <input th:value="${contractor != null} ? ${contractor.fullName} : '' " class="dialog-data form-control"
+                       name="fullName"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">ИНН</label>
+
+            <div class="col-xs-9">
+                <input th:value="${contractor != null} ? ${contractor.inn} : '' " class="dialog-data form-control" name="inn"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Счет</label>
+
+            <div class="col-xs-9">
+                <input th:value="${contractor != null} ? ${contractor.payAccount} : '' " class="dialog-data form-control" name="payAccount"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">БИК</label>
+
+            <div class="col-xs-9">
+                <input th:value="${contractor != null} ? ${contractor.bic} : '' " class="dialog-data form-control" name="bic"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!--Contract-->
+<div th:fragment="contractDialog" class="modal-body">
+    <form name="detailsForm" class="form-horizontal" >
+        <input th:value="${contract != null} ? ${contract.id} : '' " class="dialog-data" type="hidden" name="id">
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Наименование</label>
+
+            <div class="col-xs-9">
+                <input th:value="${contract != null} ? ${contract.name} : '' " class="dialog-data form-control" name="name"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Контрагент</label>
+
+            <div class="col-xs-9">
+                <select class="btn btn-default" name="contractor">
+                    <option th:each="contractor : ${contractors}"
+                            th:value="${contractor.id}"
+                            th:text="${contractor.name}"
+                            th:selected="${contract != null ? contract.contractor.id == contractor.id : false}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Номер</label>
+
+            <div class="col-xs-9">
+                <input th:value="${contract != null} ? ${contract.numb} : '' " class="dialog-data form-control" name="numb"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Дата начала</label>
+
+            <div class="col-xs-9">
+                <input th:value="${contract != null ? #temporals.format(contract.startDate, 'dd.MM.yyyy') : ''}" class="dialog-data form-control date-calendar"
+                       name="startDate"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Дата окончания</label>
+
+            <div class="col-xs-9">
+                <input th:value="${contract != null ? #temporals.format(contract.endDate, 'dd.MM.yyyy') : ''}" class="dialog-data form-control date-calendar"
+                       name="endDate"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Тип файла</label>
+
+            <div class="col-xs-9">
+                <select class="btn btn-default" name="fileType">
+                    <option th:each="fileType : ${fileTypes}"
+                            th:value="${fileType}"
+                            th:text="${fileType}"
+                            th:selected="${contract != null ? contract.fileType == fileType : false}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Кодировка</label>
+
+            <div class="col-xs-9">
+                <select class="btn btn-default" name="fileEncoding">
+                    <option th:each="fileEncoding : ${fileEncodings}"
+                            th:value="${fileEncoding}"
+                            th:text="${fileEncoding}"
+                            th:selected="${contract != null ? contract.fileEncoding == fileEncoding : false}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Разделитель (для txt/csv)</label>
+
+            <div class="col-xs-9">
+                <input th:value="${contract != null} ? ${contract.delimiter} : '' " class="dialog-data form-control" name="delimiter"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!--RegisterIn-->
+<div th:fragment="registerInDialog" class="modal-body">
+    <form name="detailsForm" class="form-horizontal" >
+        <input th:value="${registerIn != null} ? ${registerIn.id} : '' " class="dialog-data" type="hidden" name="id">
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Договор</label>
+
+            <div class="col-xs-9">
+                <select class="btn btn-default parameterized" name="contract">
+                    <option th:each="contract : ${contracts}"
+                            th:value="${contract.id}"
+                            th:text="${contract.name}"
+                            th:selected="${registerIn != null ? registerIn.contract.id == contract.id : false}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Статья</label>
+
+            <div class="col-xs-9">
+                <select class="btn btn-default" name="article">
+                    <option th:each="article : ${articles}"
+                            th:value="${article.id}"
+                            th:text="${article.name}"
+                            th:selected="${registerIn != null ? registerIn.article.id == article.id : false}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Поле. Имя.</label>
+
+            <div class="col-xs-9">
+                <input th:value="${registerIn != null} ? ${registerIn.fieldName} : '' " class="dialog-data form-control" name="fieldName"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Поле. Тип.</label>
+
+            <div class="col-xs-9">
+                <select class="btn btn-default" name="fieldType">
+                    <option th:each="fieldType : ${fieldTypes}"
+                            th:value="${fieldType}"
+                            th:text="${fieldType.str}"
+                            th:selected="${registerIn != null ? registerIn.fieldType.str == fieldType.str : false}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Поле. Длина.</label>
+
+            <div class="col-xs-9">
+                <input th:value="${registerIn != null} ? ${registerIn.length} : '' " class="dialog-data form-control" name="length"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Поле. Точность.</label>
+
+            <div class="col-xs-9">
+                <input th:value="${registerIn != null} ? ${registerIn.precision} : '' " class="dialog-data form-control" name="precision"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Описание</label>
+
+            <div class="col-xs-9">
+                <input th:value="${registerIn != null} ? ${registerIn.description} : '' " class="dialog-data form-control" name="description"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Код</label>
+
+            <div class="col-xs-9">
+                <input th:value="${registerIn != null} ? ${registerIn.code} : '' " class="dialog-data form-control" name="code"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Связанное поле</label>
+
+            <div class="col-xs-9">
+                <input th:value="${registerIn != null} ? ${registerIn.linkedFieldName} : '' " class="dialog-data form-control" name="linkedFieldName"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!--Article-->
+<div th:fragment="articleDialog" class="modal-body">
+    <form name="detailsForm" class="form-horizontal" >
+        <input th:value="${article != null} ? ${article.id} : '' " class="dialog-data" type="hidden" name="id">
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Наименование</label>
+
+            <div class="col-xs-9">
+                <input th:value="${article != null} ? ${article.name} : '' " class="dialog-data form-control"
+                       name="name"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!--User-->
+<div th:fragment="userDialog" class="modal-body">
+    <form name="detailsForm" class="form-horizontal" >
+        <input th:value="${user != null} ? ${user.id} : '' " class="dialog-data" type="hidden" name="id">
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Имя</label>
+
+            <div class="col-xs-9">
+                <input th:value="${user != null} ? ${user.name} : '' " class="dialog-data form-control"
+                       name="name"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Пароль</label>
+
+            <div class="col-xs-9">
+                <input th:value="${user != null} ? ${user.password} : '' " type="password" class="dialog-data form-control"
+                       name="password"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Почта</label>
+
+            <div class="col-xs-9">
+                <input th:value="${user != null} ? ${user.email} : '' " type="email" class="dialog-data form-control"
+                       name="email"/>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+<!--Constant-->
+<div th:fragment="constantDialog" class="modal-body">
+    <form name="detailsForm" class="form-horizontal" >
+        <input th:value="${constant != null} ? ${constant.id} : '' " class="dialog-data" type="hidden" name="id">
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Основной каталог (полный путь)</label>
+
+            <div class="col-xs-9">
+                <input th:value="${constant != null} ? ${constant.mainPath} : '' " class="dialog-data form-control"
+                       name="mainPath"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Катлог входящих реестров</label>
+
+            <div class="col-xs-9">
+                <input th:value="${constant != null} ? ${constant.registerInCatalog} : '' " class="dialog-data form-control"
+                       name="registerInCatalog"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Катлог реестров задолженности</label>
+
+            <div class="col-xs-9">
+                <input th:value="${constant != null} ? ${constant.chargesInCatalog} : '' " class="dialog-data form-control"
+                       name="chargesInCatalog"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!--AddressElement-->
+<div th:fragment="addressElementDialog" class="modal-body">
+    <form name="detailsForm" class="form-horizontal" >
+        <input th:value="${addressElement != null} ? ${addressElement.id} : '' " class="dialog-data" type="hidden" name="id">
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Договор</label>
+
+            <div class="col-xs-9">
+                <select class="btn btn-default parameterized" name="contract">
+                    <option th:each="contract : ${contracts}"
+                            th:value="${contract.id}"
+                            th:text="${contract.name}"
+                            th:selected="${addressElement != null ? addressElement.contract.id == contract.id : false}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Разделитель</label>
+
+            <div class="col-xs-9">
+                <input th:value="${addressElement != null} ? ${addressElement.delimiter} : '' " class="dialog-data form-control"
+                       name="delimiter"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Поле Улица</label>
+
+            <div class="col-xs-9">
+                <input th:value="${addressElement != null} ? ${addressElement.fieldStreet} : '' " class="dialog-data form-control"
+                       name="fieldStreet"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Позиция Улица</label>
+
+            <div class="col-xs-9">
+                <input th:value="${addressElement != null} ? ${addressElement.posStreet} : '' " class="dialog-data form-control"
+                       name="posStreet"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Поле Дом</label>
+
+            <div class="col-xs-9">
+                <input th:value="${addressElement != null} ? ${addressElement.fieldHouse} : '' " class="dialog-data form-control"
+                       name="fieldHouse"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Позиция Дом</label>
+
+            <div class="col-xs-9">
+                <input th:value="${addressElement != null} ? ${addressElement.posHouse} : '' " class="dialog-data form-control"
+                       name="posHouse"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Поле квартира</label>
+
+            <div class="col-xs-9">
+                <input th:value="${addressElement != null} ? ${addressElement.fieldApartment} : '' " class="dialog-data form-control"
+                       name="fieldApartment"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Позиция квартира</label>
+
+            <div class="col-xs-9">
+                <input th:value="${addressElement != null} ? ${addressElement.posApartment} : '' " class="dialog-data form-control"
+                       name="posApartment"/>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+<!--Charges-->
+<div th:fragment="chargeDialog" class="modal-body">
+    <form name="detailsForm" class="form-horizontal" >
+        <input th:value="${charge != null} ? ${charge.id} : '' " class="dialog-data" type="hidden" name="id">
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Договор</label>
+
+            <div class="col-xs-9">
+                <select id="contract" class="btn btn-default parameterized" name="contract">
+                    <option th:each="contract : ${contracts}"
+                            th:value="${contract.id}"
+                            th:text="${contract.name}"
+                            th:selected="${charge != null ? charge.contract.id == contract.id : false}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Полный адрес</label>
+
+            <div class="col-xs-9">
+                <input disabled="disabled" th:value="${charge != null} ? ${charge.address} : '' " class="dialog-data form-control"
+                       name="address"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Улица</label>
+
+            <div class="col-xs-9">
+                <input th:value="${charge != null} ? ${charge.street} : '' " class="dialog-data form-control"
+                      id="street" name="street"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Дом</label>
+
+            <div class="col-xs-9">
+                <input th:value="${charge != null} ? ${charge.house} : '' " class="dialog-data form-control"
+                       name="house"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Квартира</label>
+
+            <div class="col-xs-9">
+                <input th:value="${charge != null} ? ${charge.apartment} : '' " class="dialog-data form-control"
+                       name="apartment"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

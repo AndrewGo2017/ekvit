@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta http-equiv=”Content-Type” content=”text/html; charset=utf-8″>
+    <title th:text="${title}"></title>
+
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dataTables.jqueryui.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+
+    <script th:src="@{/js/jquery-3.3.1.min.js}" defer></script>
+    <script th:src="@{/js/jquery.dataTables.min.js}" defer></script>
+    <script th:src="@{/js/dataTables.jqueryui.min.js}" defer></script>
+    <script th:src="@{/js/bootstrap.min.js}" defer></script>
+    <script th:src="@{/js/jquery-ui.min.js}" defer></script>
+    <script th:src="@{/js/main.js}" defer></script>
+</head>
+
+<body>
+<div th:fragment="navbar">
+    <nav th:style="'background:url(' + @{/pic/44.jpg} + ');'" class="nav navbar navbar-expand-md navbar-dark bg-dark">
+        <img th:src="@{/pic/logo.png}" class="navbar-brand logo" width="70" height="70" href="#"/>
+
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contract}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="dictionaries">Справочники</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="functions">Функции</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/applicationEvents}">События</a>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}">Выход</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div th:fragment="dialog-confirm" class="confirm-dialog invisible" title="Удаление">
+    <div>Элемент будет удален. Вы уверены?</div>
+</div>
+
+<div th:fragment="dialog-error" id="errorMessageDialog">
+    <div></div>
+</div>
+
+<div th:fragment="dialog-loading" id="loadDialog" title="Обработка">
+    <div id="progressbar"></div>
+</div>
+
+<div th:fragment="dialog-dictionary" id="dictionaryDialog" class="invisible" title="Справочники">
+    <ul class="menu">
+        <li>
+            <div><a th:href="@{/contract}">Договоры</a></div>
+        </li>
+        <li>
+            <div><a th:href="@{/contractor}">Контрагенты</a></div>
+        </li>
+        <li>
+            <div><a th:href="@{/constant}">Константы</a></div>
+        </li>
+        <li>
+            <div><a th:href="@{/charge}">Начисления</a></div>
+        </li>
+        <li>
+            <div><a th:href="@{/user}">Пользователи</a></div>
+        </li>
+        <li>
+            <div><a th:href="@{/registerin}">Реестры задолженности</a></div>
+        </li>
+        <li>
+            <div><a th:href="@{/correctAddress}">Сопоставленные адреса</a></div>
+        </li>
+        <li>
+            <div><a th:href="@{/addressElement}">Элементы адреса</a></div>
+        </li>
+    </ul>
+</div>
+
+<div th:fragment="dialog-function" id="functionDialog" class="invisible" title="Функции">
+    <ul class="menu">
+        <li>
+            <div><a th:href="@{/register-in-upload}">Загрузка реестров задолженности</a></div>
+        </li>
+    </ul>
+</div>
+
+<div th:fragment="dialog-info" id="infoDialog">
+    <div></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://ekvit.sber.ru"
+           targetNamespace="http://ekvit.sber.ru">
+
+    <xs:element name="getChargesByAddressRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="adr" type="tns:adr"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getChargesByAddressResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="charges" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="adr">
+        <xs:sequence>
+            <xs:element name="city" type="xs:string"/>
+            <xs:element name="street" type="xs:string"/>
+            <xs:element name="house" type="xs:string"/>
+            <xs:element name="apartment" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+
+    <!--<xs:element name="getAddressElements">-->
+        <!--<xs:complexType>-->
+            <!--<xs:sequence>-->
+                <!--<xs:element name="element" type="xs:string"/>-->
+                <!--<xs:element name="value" type="xs:string"/>-->
+            <!--</xs:sequence>-->
+        <!--</xs:complexType>-->
+    <!--</xs:element>-->
+</xs:schema>

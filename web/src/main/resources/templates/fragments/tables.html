@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>\</title>
+</head>
+<body>
+<!--Contractor-->
+<div th:fragment="contractorsList">
+    <table class="display main-table" style="width:100%">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+
+            <th>#</th>
+            <th>Id</th>
+            <th>Наименованиние</th>
+            <th>Полное наименование</th>
+            <th>ИНН</th>
+            <th>Счет</th>
+            <th>БИК</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="contractor,iter: ${contractors}">
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|updateRow('${contractor.id}')|">Редактировать
+                    <span class='ui-icon ui-icon-gear' aria-hidden='true'></span></button>
+            </td>
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|removeRow('${contractor.id}')|">Удалить
+                    <span class='ui-icon ui-icon-trash' aria-hidden='true'></span></button>
+            </td>
+            <td th:text="${iter.count}"></td>
+            <td th:text="${contractor.id}"></td>
+            <td th:utext="${contractor.name}"></td>
+            <td th:utext="${contractor.fullName}"></td>
+            <td th:utext="${contractor.inn}"></td>
+            <td th:utext="${contractor.payAccount}"></td>
+            <td th:utext="${contractor.bic}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--Contract-->
+<div th:fragment="contractsList">
+    <table class="display main-table" style="width:100%">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+
+            <th>#</th>
+            <th>Id</th>
+            <th>Наименованиние</th>
+            <th>Контрагент</th>
+            <th>ИНН</th>
+            <th>Номер</th>
+            <th>Дата начала</th>
+            <th>Дата окончания</th>
+            <th>Тип файла</th>
+            <th>Кодировка файла</th>
+            <th>Разделитель</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="contract,iter: ${contracts}">
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|updateRow('${contract.id}')|">Редактировать
+                    <span class='ui-icon ui-icon-gear' aria-hidden='true'></span></button>
+            </td>
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|removeRow('${contract.id}')|">Удалить
+                    <span class='ui-icon ui-icon-trash' aria-hidden='true'></span></button>
+            </td>
+            <td th:text="${iter.count}"></td>
+            <td th:text="${contract.id}"></td>
+            <td th:utext="${contract.name}"></td>
+            <td th:utext="${contract.contractor.name}"></td>
+            <td th:utext="${contract.contractor.inn}"></td>
+            <td th:utext="${contract.numb}"></td>
+            <td th:utext="${contract.startDate != null ? #temporals.format(contract.startDate, 'dd.MM.yyyy') : ''}"></td>
+            <td th:utext="${contract.endDate != null ? #temporals.format(contract.endDate, 'dd.MM.yyyy') : ''}"></td>
+            <td th:utext="${contract.fileType}"></td>
+            <td th:utext="${contract.fileEncoding}"></td>
+            <td th:utext="${contract.delimiter}"></td>
+            <td>
+                <a class="ui-button ui-corner-all" th:href="@{'/registerin?idParam=' + ${contract.id}}">Реестр задолженности
+                    <span class='ui-icon ui-icon-clipboard' aria-hidden='true'></span></a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--RegisterIn-->
+<div th:fragment="registerInList">
+    <table class="display main-table" style="width:100%">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+
+            <th>#</th>
+            <th>Id</th>
+            <th>Договор</th>
+            <th>Статья</th>
+            <th>Поле.Имя.</th>
+            <th>Поле.Тип.</th>
+            <th>Поле.Длина.</th>
+            <th>Поле.Точность.</th>
+            <th>Описание</th>
+            <th>Код</th>
+            <th>Связанное поле</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="registerIn,iter: ${registerIns}">
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|updateRow('${registerIn.id}')|">Редактировать
+                    <span class='ui-icon ui-icon-gear' aria-hidden='true'></span></button>
+            </td>
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|removeRow('${registerIn.id}')|">Удалить
+                    <span class='ui-icon ui-icon-trash' aria-hidden='true'></span></button>
+            </td>
+            <td th:text="${iter.count}"></td>
+            <td th:text="${registerIn.id}"></td>
+            <td th:text="${registerIn.contract.name}"></td>
+            <td th:text="${registerIn.article.name}"></td>
+            <td th:text="${registerIn.fieldName}"></td>
+            <td th:text="${registerIn.fieldType.str}"></td>
+            <td th:text="${registerIn.length}"></td>
+            <td th:text="${registerIn.precision}"></td>
+            <td th:text="${registerIn.description}"></td>
+            <td th:text="${registerIn.code}"></td>
+            <td th:text="${registerIn.linkedFieldName}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--Article-->
+<div th:fragment="articlesList">
+    <table class="display main-table" style="width:100%">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+
+            <th>#</th>
+            <th>Id</th>
+            <th>Наименованиние</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="article,iter: ${articles}">
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|updateRow('${article.id}')|">Редактировать
+                    <span class='ui-icon ui-icon-gear' aria-hidden='true'></span></button>
+            </td>
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|removeRow('${article.id}')|">Удалить
+                    <span class='ui-icon ui-icon-trash' aria-hidden='true'></span></button>
+            </td>
+            <td th:text="${iter.count}"></td>
+            <td th:text="${article.id}"></td>
+            <td th:utext="${article.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!--User-->
+<div th:fragment="usersList">
+    <table class="display main-table" style="width:100%">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+
+            <th>#</th>
+            <th>Id</th>
+            <th>Имя</th>
+            <th>Пароль</th>
+            <th>Почта</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user,iter: ${users}">
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|updateRow('${user.id}')|">Редактировать
+                    <span class='ui-icon ui-icon-gear' aria-hidden='true'></span></button>
+            </td>
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|removeRow('${user.id}')|">Удалить
+                    <span class='ui-icon ui-icon-trash' aria-hidden='true'></span></button>
+            </td>
+            <td th:text="${iter.count}"></td>
+            <td th:text="${user.id}"></td>
+            <td th:utext="${user.name}"></td>
+            <td th:utext="${user.password}"></td>
+            <td th:utext="${user.email}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--Constant-->
+<div th:fragment="constantsList">
+    <table class="display main-table" style="width:100%">
+        <thead>
+        <tr>
+            <th></th>
+
+            <th>Основной каталог</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="constant: ${constants}">
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|updateRow('${constant.id}')|">Редактировать
+                    <span class='ui-icon ui-icon-gear' aria-hidden='true'></span></button>
+            </td>
+            <td th:text="${constant.mainPath}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!--AddressElement-->
+<div th:fragment="addressElementList">
+    <table class="display main-table" style="width:100%">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+
+            <th>#</th>
+            <th>Id</th>
+            <th>Договор</th>
+            <th>Разделитель</th>
+            <th>Поле Улица</th>
+            <th>Позиция Улица</th>
+            <th>Поле Дом</th>
+            <th>Позиция Дом</th>
+            <th>Поле Квартира</th>
+            <th>Позиция Квартира</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="addressElement,iter: ${addressElements}">
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|updateRow('${addressElement.id}')|">Редактировать
+                    <span class='ui-icon ui-icon-gear' aria-hidden='true'></span></button>
+            </td>
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|removeRow('${addressElement.id}')|">Удалить
+                    <span class='ui-icon ui-icon-trash' aria-hidden='true'></span></button>
+            </td>
+            <td th:text="${iter.count}"></td>
+            <td th:text="${addressElement.id}"></td>
+            <td th:utext="${addressElement.contract.name}"></td>
+            <td th:utext="${addressElement.delimiter}"></td>
+            <td th:utext="${addressElement.fieldStreet}"></td>
+            <td th:utext="${addressElement.posStreet}"></td>
+            <td th:utext="${addressElement.fieldHouse}"></td>
+            <td th:utext="${addressElement.posHouse}"></td>
+            <td th:utext="${addressElement.fieldApartment}"></td>
+            <td th:utext="${addressElement.posApartment}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!--CorrectAddress-->
+<div th:fragment="correctAddressList">
+    <table class="display main-table" style="width:100%">
+        <thead>
+        <tr>
+            <th></th>
+            <!--<th></th>-->
+
+            <th>#</th>
+            <th>Id</th>
+            <th>Договор</th>
+            <th>Лицевой счет</th>
+            <th>Адресс</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="correctAddress,iter: ${correctAddresses}">
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|updateRow('${correctAddress.id}')|">Редактировать
+                    <span class='ui-icon ui-icon-gear' aria-hidden='true'></span></button>
+            </td>
+            <!--<td>-->
+                <!--<button class="ui-button ui-corner-all" th:onclick="|removeRow('${correctAddress.id}')|">Удалить-->
+                    <!--<span class='ui-icon ui-icon-trash' aria-hidden='true'></span></button>-->
+            <!--</td>-->
+            <td th:text="${iter.count}"></td>
+            <td th:text="${correctAddress.id}"></td>
+            <td th:utext="${correctAddress.contract.name}"></td>
+            <td th:utext="${correctAddress.ls}"></td>
+            <td th:utext="${correctAddress.address.address}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!--Charge-->
+<div th:fragment="chargeList">
+    <table class="display main-table" style="width:100%">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+
+            <th>#</th>
+            <th>Id</th>
+            <th>Договор</th>
+            <th>Адресс</th>
+            <th>Улица</th>
+            <th>Дом</th>
+            <th>Квартира</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="charge,iter: ${charges}">
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|updateCharge('${charge.id}')|">Редактировать
+                    <span class='ui-icon ui-icon-gear' aria-hidden='true'></span></button>
+            </td>
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|removeRow('${charge.id}')|">Удалить
+                    <span class='ui-icon ui-icon-trash' aria-hidden='true'></span></button>
+            </td>
+            <td th:text="${iter.count}"></td>
+            <td th:text="${charge.id}"></td>
+            <td th:utext="${charge.contract.name}"></td>
+            <td th:utext="${charge.address}"></td>
+            <td th:utext="${charge.street}"></td>
+            <td th:utext="${charge.house}"></td>
+            <td th:utext="${charge.apartment}"></td>
+            <td>
+                <button class="ui-button ui-corner-all" th:onclick="|getStatus('${charge.id}')|">Статус
+                    <span class='ui-icon ui-icon-search' aria-hidden='true'></span></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!--ApplicationEvents-->
+<div th:fragment="applicationEventsList">
+    <table class="display main-table" style="width:100%">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Дата</th>
+            <th>Источник</th>
+            <th>Событие</th>
+            <th>Статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="applicationEvent,iter: ${applicationEvents}">
+            <td th:text="${iter.count}"></td>
+            <td th:text="${#temporals.format(applicationEvent.date, 'dd.MM.yyyy HH:mm:ss')}"></td>
+            <td th:utext="${applicationEvent.source}"></td>
+            <td th:utext="${applicationEvent.event}"></td>
+            <td th:utext="${applicationEvent.status.str}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
