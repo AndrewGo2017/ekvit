@@ -2,7 +2,7 @@
 The project is implemented using the following tools and technologies: Maven, Spring, JPA, Security, JUnit, Logging, REST, SOAP, Thymeleaf, Jquery. Data storage is implemented using PostgreSQL.
 
 ## Short description
-The application is a part of the start-up project I was working on lately. This project is for storing and handling housing and communal services charges. It allows to create unified address from different file sources. Services allows to communicate with another applications.
+The application is a part of the start-up project I was working on lately. This project is for storing and handling housing and communal services charges. It allows to create unified data from different file sources. Services allows to communicate with another applications.
 
 ## Modules
 ### Web
